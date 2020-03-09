@@ -14,28 +14,29 @@ export class LoginComponent implements OnInit, OnDestroy {
   form: FormGroup;
 
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private authService: AuthService,
     private toastr: ToastrService,
     private router: Router
-    ) { }
+  ) { }
 
   ngOnInit() {
     const body = document.getElementsByTagName('body')[0];
     body.classList.add('login-page');
 
     this.form = this.fb.group({
-      email: ["", [Validators.required, Validators.email]],
-      password : ["", Validators.required]
-    })
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required]
+    });
   }
 
-  doLogin(form: FormGroup){
-    if(form.valid){
+  doLogin(form: FormGroup) {
+    if (form.valid) {
       const isLoginSuccess = this.authService.login(form.value.email, form.value.password);
-      if(isLoginSuccess){
+      if (isLoginSuccess) {
         this.toastr.success('Success', 'Logged in Successfully');
-        this.router.navigate(["mail", "inbox"]);
+        this.authService.setActiveUser(isLoginSuccess);
+        this.router.navigate(['mail', 'inbox']);
       } else {
         this.toastr.error('Error', 'Entered email or password is incorrect');
       }

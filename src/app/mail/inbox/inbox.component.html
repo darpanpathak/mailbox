@@ -19,43 +19,52 @@
         <div class="mailbox-controls">
 
             <div class="btn-group">
-                <button type="button" class="btn btn-default btn-sm"><i class="far fa-trash-alt" (click)="delete()"></i></button>
+                <button type="button" class="btn btn-default btn-sm"><i class="far fa-trash-alt"
+                        (click)="delete()"></i></button>
             </div>
             <!-- /.btn-group -->
-            <button type="button" class="btn btn-default btn-sm"><i class="fas fa-sync-alt"></i></button>
+            <button type="button" class="btn btn-default btn-sm" (click)="getMails()"><i
+                    class="fas fa-sync-alt"></i></button>
             <div class="float-right">
                 {{ (PAGE_COUNT * page + 1) + " - " + ((PAGE_COUNT * (page+1))
                 < totalCount ? (PAGE_COUNT * (page+1)) : totalCount) + " / " + totalCount }} <div class="btn-group">
-                    <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-left" (click)="prev()"></i></button>
-                    <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-right" (click)="next()"></i></button>
+                    <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-left"
+                            (click)="prev()"></i></button>
+                    <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-right"
+                            (click)="next()"></i></button>
+                </div>
+                <!-- /.btn-group -->
             </div>
-            <!-- /.btn-group -->
+            <!-- /.float-right -->
         </div>
-        <!-- /.float-right -->
+        <div class="table-responsive mailbox-messages">
+
+            <form [formGroup]="form">
+
+                <table class="table table-hover" formArrayName="mails">
+                    <tbody>
+                        <tr *ngFor="let item of mails.controls; let i = index;"
+                            [ngClass]="{'unread': !item.value.isRead}" (click)="openMail(item.value.id)">
+                            <td>
+                                <div class="icheck-primary" [formGroupName]="i">
+                                    <input type="checkbox" value="" [attr.id]="'check'+i" formControlName="isChecked">
+                                    <label [attr.for]="'check'+i"></label>
+                                </div>
+                            </td>
+                            <td class="mailbox-name">{{item.value.firstName + " " + item.value.lastName}}</td>
+                            <td class="mailbox-subject"> {{item.value.subject}} </td>
+                            <td class="mailbox-date">{{item.value.datetime | dateFormat}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div>
+                    <p class="text-center" *ngIf="mails.controls.length === 0">No Mails Found</p>
+                </div>
+
+            </form>
+        </div>
+        <!-- /.mail-box-messages -->
     </div>
-    <div class="table-responsive mailbox-messages">
-
-        <form [formGroup]="form">
-
-            <table class="table table-hover" formArrayName="mails">
-                <tbody>
-                    <tr *ngFor="let item of mails.controls; let i = index;" [ngClass]="{'unread': !item.value.isRead}">
-                        <td>
-                            <div class="icheck-primary" [formGroupName]="i">
-                                <input type="checkbox" value="" [attr.id]="'check'+i" formControlName="isChecked">
-                                <label [attr.for]="'check'+i"></label>
-                            </div>
-                        </td>
-                        <td class="mailbox-name">{{item.value.firstName + " " + item.value.lastName}}</td>
-                        <td class="mailbox-subject"> {{item.value.subject}} </td>
-                        <td class="mailbox-date">{{item.value.datetime | dateFormat}}</td>
-                    </tr>
-                </tbody>
-            </table>
-
-        </form>
-    </div>
-    <!-- /.mail-box-messages -->
-</div>
 
 </div>

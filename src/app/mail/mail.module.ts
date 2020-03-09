@@ -11,22 +11,27 @@ import { SidebarModule } from './../shared/modules/sidebar/sidebar.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap';
 import { CKEditorModule } from 'ngx-ckeditor';
+import { ReadMailComponent } from './read-mail/read-mail.component';
 
 const routes: Routes = [
   {
-    path :"",
+    path: "",
     component: MailComponent,
-    children : [
+    children: [
       {
-        path : "inbox",
-        component : InboxComponent
+        path: "inbox",
+        component: InboxComponent
+      },
+      {
+        path: 'read/:id',
+        component: ReadMailComponent
       }
     ]
   }
 ]
 
 @NgModule({
-  declarations: [MailComponent, ComposeComponent, InboxComponent],
+  declarations: [MailComponent, ComposeComponent, InboxComponent, ReadMailComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

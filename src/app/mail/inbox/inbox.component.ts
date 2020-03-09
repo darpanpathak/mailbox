@@ -2,6 +2,7 @@ import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { LocalStorageService } from './../../shared/services/local-storage.service';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-inbox',
@@ -11,11 +12,15 @@ import { ToastrService } from 'ngx-toastr';
 export class InboxComponent implements OnInit {
   private readonly PAGE_COUNT = 10;
   mailList = [];
-  page: number = 0;
+  page = 0;
   form: FormGroup;
-  totalCount: number = 0;
+  totalCount = 0;
 
-  constructor(private localStorageService: LocalStorageService, private fb: FormBuilder, private toastr: ToastrService) {
+  constructor(
+    private localStorageService: LocalStorageService,
+    private fb: FormBuilder,
+    private toastr: ToastrService,
+    private router: Router) {
 
   }
 
@@ -64,12 +69,18 @@ export class InboxComponent implements OnInit {
   delete() {
     const selectedMails = {};
     this.mails.value.forEach(item => {
-      if (item.isChecked)
+      if (item.isChecked) {
         selectedMails[item.id] = item.isChecked;
+      }
     });
     this.localStorageService.deleteMails(selectedMails);
     this.toastr.success('Success', 'Mails removed');
     this.getMails();
+  }
+
+  openMail(id) {
+    this.localStorageService.oepnMail(id);
+    this.router.navigate(['mail', 'read', id]);
   }
 
 }

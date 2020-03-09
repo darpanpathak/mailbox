@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -6,10 +8,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-
+  @Input() unread = 0;
+  @Output() signout = new EventEmitter();
   constructor() { }
 
   ngOnInit() {
   }
 
+  signOut() {
+    this.signout.emit(true);
+  }
 }

@@ -8,7 +8,11 @@ export class AuthService {
 
   constructor(private localStorageService: LocalStorageService) { }
 
-  login(email, password){
+  login(email, password) {
     return this.localStorageService.loginUser(email, password);
+  }
+
+  setActiveUser(user: IUser) {
+    this.localStorageService.setActiveUser(user);
   }
 }

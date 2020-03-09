@@ -7,7 +7,7 @@
         <div class="card-body login-card-body">
             <p class="login-box-msg">Sign in to start your session</p>
 
-            <form [formGroup]="form" (submit)="doLogin(form)">
+            <form [formGroup]="form" (ngSubmit)="doLogin(form)">
                 <div class="input-group mb-3">
                     <input type="email" class="form-control" placeholder="Email" formControlName="email">
                     <div class="input-group-append">
@@ -30,7 +30,8 @@
                     </div>
                     <!-- /.col -->
                     <div class="col-4">
-                        <button type="submit" class="btn btn-primary btn-block" [disabled]="!form.valid">Sign In</button>
+                        <button type="submit" class="btn btn-primary btn-block" [disabled]="!form.valid">Sign
+                            In</button>
                     </div>
                     <!-- /.col -->
                 </div>

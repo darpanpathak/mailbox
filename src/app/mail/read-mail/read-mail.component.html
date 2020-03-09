@@ -1,0 +1,40 @@
+<div class="card card-primary card-outline">
+    <div class="card-header">
+        <h3 class="card-title">
+            <a [routerLink]="['/mail','inbox']" routerLinkActive="router-link-active" class="btn btn-primary mr-2">Go
+                Back</a>
+            Read Mail
+        </h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body no-padding">
+        <div class="mailbox-read-info">
+            <h5>{{mail.subject}}</h5>
+            <h6>From: {{mail.from}}
+                <span class="mailbox-read-time float-right">{{mail.datetime | date:'dd/MM/yyyy hh:mm'}}</span></h6>
+        </div>
+        <!-- /.mailbox-read-info -->
+        <div class="mailbox-controls with-border text-center">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body"
+                    title="" data-original-title="Delete">
+                    <i class="fa fa-trash-o"></i></button>
+                <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body"
+                    title="" data-original-title="Reply">
+                    <i class="fa fa-reply"></i></button>
+                <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body"
+                    title="" data-original-title="Forward">
+                    <i class="fa fa-share"></i></button>
+            </div>
+            <!-- /.btn-group -->
+            <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title=""
+                data-original-title="Print">
+                <i class="fa fa-print"></i></button>
+        </div>
+        <!-- /.mailbox-controls -->
+        <div class="mailbox-read-message">
+            <div [innerHtml]="mail.body"></div>
+        </div>
+        <!-- /.mailbox-read-message -->
+    </div>
+</div>
