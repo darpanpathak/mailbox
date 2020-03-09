@@ -7,7 +7,7 @@
         </h3>
     </div>
     <!-- /.box-header -->
-    <div class="box-body no-padding">
+    <div class="box-body no-padding" *ngIf="mail && mail.subject; else nomail">
         <div class="mailbox-read-info">
             <h5>{{mail.subject}}</h5>
             <h6>From: {{mail.from}}
@@ -38,3 +38,7 @@
         <!-- /.mailbox-read-message -->
     </div>
 </div>
+
+<ng-template #nomail>
+    <p>No Mail Found</p>
+</ng-template>

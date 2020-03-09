@@ -1,8 +1,9 @@
-import { AuthService } from './../auth.service';
+
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,
+    private localStorageService: LocalStorageService,
     private toastr: ToastrService,
     private router: Router
   ) { }
@@ -32,10 +33,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   doLogin(form: FormGroup) {
     if (form.valid) {
-      const isLoginSuccess = this.authService.login(form.value.email, form.value.password);
+      const isLoginSuccess = this.localStorageService.loginUser(form.value.email, form.value.password);
       if (isLoginSuccess) {
         this.toastr.success('Success', 'Logged in Successfully');
-        this.authService.setActiveUser(isLoginSuccess);
+        this.localStorageService.setActiveUser(isLoginSuccess);
         this.router.navigate(['mail', 'inbox']);
       } else {
         this.toastr.error('Error', 'Entered email or password is incorrect');

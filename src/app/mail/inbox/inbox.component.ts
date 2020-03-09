@@ -79,7 +79,7 @@ export class InboxComponent implements OnInit {
   }
 
   openMail(id) {
-    this.localStorageService.oepnMail(id);
+    this.localStorageService.openMail(id);
     this.router.navigate(['mail', 'read', id]);
   }
 

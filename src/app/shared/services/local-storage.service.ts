@@ -23,7 +23,9 @@ export class LocalStorageService {
       this.objToString(mockKeys.MAIL, this.mails);
     }
 
-    this.setUnreadCount();
+    if (this.getActiveUser()) {
+      this.setUnreadCount();
+    }
   }
 
   isKeyExists(key: string) {
@@ -66,7 +68,7 @@ export class LocalStorageService {
   getAllMails() {
     const allmails = this.parseFromString(mockKeys.MAIL);
     const activeUser = this.getActiveUser();
-    return allmails.filter((item) => {
+    return !activeUser ? [] : allmails.filter((item) => {
       return item.to === activeUser.email || item.cc === activeUser.email;
     });
   }
@@ -117,7 +119,7 @@ export class LocalStorageService {
     this.unreadCount.next(newCount);
   }
 
-  oepnMail(id) {
+  openMail(id) {
     const allmails = this.getAllMails();
     const objIndex = allmails.findIndex(obj => obj.id === id);
     const updatedObj = { ...allmails[objIndex], isRead: true };

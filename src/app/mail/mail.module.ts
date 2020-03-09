@@ -15,11 +15,11 @@ import { ReadMailComponent } from './read-mail/read-mail.component';
 
 const routes: Routes = [
   {
-    path: "",
+    path: '',
     component: MailComponent,
     children: [
       {
-        path: "inbox",
+        path: 'inbox',
         component: InboxComponent
       },
       {
@@ -28,7 +28,7 @@ const routes: Routes = [
       }
     ]
   }
-]
+];
 
 @NgModule({
   declarations: [MailComponent, ComposeComponent, InboxComponent, ReadMailComponent],

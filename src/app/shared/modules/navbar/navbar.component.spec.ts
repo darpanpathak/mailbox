@@ -8,9 +8,9 @@ describe('NavbarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NavbarComponent ]
+      declarations: [NavbarComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -21,5 +21,11 @@ describe('NavbarComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should emit an event on signout', () => {
+    spyOn(component.signout, 'emit').and.callThrough();
+    component.signOut();
+    expect(component.signout.emit).toHaveBeenCalled();
   });
 });

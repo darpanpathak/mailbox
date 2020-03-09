@@ -50,6 +50,8 @@ export class ComposeComponent implements OnInit {
       this.toastr.success('Mail Sent');
       this.form.reset();
       this.modalRef.hide();
+    } else {
+      this.toastr.error('Form is invalid');
     }
   }
 
