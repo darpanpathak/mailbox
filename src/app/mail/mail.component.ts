@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class MailComponent implements OnInit {
   unreadCount = this.localStorageService.getUnreadMailCount();
+  deleteCount = this.localStorageService.getDeleteCount();
   constructor(private modalService: BsModalService, private localStorageService: LocalStorageService, private router: Router) { }
 
   ngOnInit() {

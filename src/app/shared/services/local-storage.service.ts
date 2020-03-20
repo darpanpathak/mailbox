@@ -14,6 +14,7 @@ export class LocalStorageService {
   mails = mails;
 
   private unreadCount: BehaviorSubject<number> = new BehaviorSubject(0);
+  private deleteCount: BehaviorSubject<number> = new BehaviorSubject(0);
 
   constructor() {
     if (!this.isKeyExists(mockKeys.USER)) {
@@ -25,6 +26,7 @@ export class LocalStorageService {
 
     if (this.getActiveUser()) {
       this.setUnreadCount();
+      this.setDeleteCount();
     }
   }
 
@@ -62,6 +64,7 @@ export class LocalStorageService {
   objToString(key: string, obj: any) {
     const result = localStorage.setItem(key, JSON.stringify(obj));
     this.setUnreadCount();
+    this.setDeleteCount();
     return result;
   }
 
@@ -93,11 +96,19 @@ export class LocalStorageService {
   }
 
   sortByDate() {
-    return this.getAllMails().sort((a, b) => new Date(b.datetime).getTime() - new Date(a.datetime).getTime());
+    return this.getAllMails().filter(item => !item.isDeleted).sort((a, b) => new Date(b.datetime).getTime() - new Date(a.datetime).getTime());
   }
 
   deleteMails(selectedIds) {
-    const newlist = this.getAllMails().filter((item) => !selectedIds[item.id]);
+    // const newlist = this.getAllMails().filter((item) => !selectedIds[item.id]);
+    const newlist = [];
+    this.getAllMails().forEach(item => {
+        if(selectedIds[item.id]){
+          newlist.push({...item, isDeleted: true});
+        } else {
+          newlist.push(item);
+        }
+    });
     this.objToString(mockKeys.MAIL, newlist);
   }
 
@@ -130,6 +141,15 @@ export class LocalStorageService {
     ];
 
     this.objToString(mockKeys.MAIL, updatedMails);
+  }
+
+  setDeleteCount() {
+    const newCount = this.getAllMails().filter(item => item.isDeleted);
+    this.deleteCount.next(newCount.length);
+  }
+
+  getDeleteCount(){
+    return this.deleteCount.asObservable();
   }
 
 }
