@@ -1,6 +1,6 @@
 <div class="wrapper">
     <app-navbar [unread]="unreadCount | async" (signout)=doLogOut($event)></app-navbar>
-    <app-sidebar></app-sidebar>
+    <!-- <app-sidebar></app-sidebar> -->
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -39,8 +39,7 @@
                         <div class="card-body p-0">
                             <ul class="nav nav-pills flex-column">
                                 <li class="nav-item active">
-                                    <a [routerLink]="['mail','inbox']" routerLinkActive="router-link-active"
-                                        class="nav-link">
+                                    <a [routerLink]="['mail','inbox']" routerLinkActive="router-link-active" class="nav-link">
                                         <i class="fas fa-inbox"></i> Inbox
                                         <span class="badge bg-primary float-right">{{unreadCount | async}}</span>
                                     </a>
