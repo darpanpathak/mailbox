@@ -78,9 +78,12 @@ export class InboxComponent implements OnInit {
     this.getMails();
   }
 
-  openMail(id) {
-    this.localStorageService.openMail(id);
-    this.router.navigate(['mail', 'read', id]);
+  openMail(e) {
+    const id = e.target.dataset && e.target.dataset.id ? e.target.dataset.id : null;
+    if (id) {
+      this.localStorageService.openMail(id);
+      this.router.navigate(['mail', 'read', id]);
+    }
   }
 
 }
